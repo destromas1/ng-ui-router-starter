@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("app").controller('profileCtrl', ['$scope', '$state', '$stateParams', 'personService', function ($scope, $state, $stateParams, personService) {
+angular.module("app").controller('profileCtrl', ['$scope', '$state', '$stateParams', function ($scope, $state, $stateParams) {
 	console.log('profileCtrl is running...');
 
 	$scope.dashboardName = $stateParams.data ? $stateParams.data.dashboardName : "";
@@ -8,19 +8,5 @@ angular.module("app").controller('profileCtrl', ['$scope', '$state', '$statePara
 	$scope.sortedBy = {
 		firstName: false
 	};
-
-	$scope.persons = personService.getPersons();
-
-	$scope.personsView = personService.getPersons();
 	
-	$scope.sortPersons = function () {
-
-		if (!$scope.sortedBy.firstName) {
-			$scope.personsView = personService.getPersons();
-		} else {
-			$scope.personsView = _.sortBy($scope.persons, function (obj) {
-				return obj.firstName
-			});
-		}
-	};
 }]);
