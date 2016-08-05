@@ -1,0 +1,127 @@
+/*
+ * ngView triggers three animation events: enter, leave and move.
+ */
+.view-container {
+  height:500px;
+  position:relative;
+      margin-top: 100px;
+}
+
+.view-animation.ng-enter {
+  -webkit-animation: enter_animation 1s; 
+  animation: enter_animation 1s; 
+
+  /* 
+   * ng-animate has a slight starting delay for optimization purposes
+   * so if you see a flicker effect then you'll need to put some extra
+   * styles to "shim" the animation.
+   */
+  left:100%;
+}
+
+.view-animation.ng-leave {
+  -webkit-animation: leave_animation 1s; 
+  animation: leave_animation 1s;
+  left:0%;
+}
+
+.view-animation.ng-leave,
+.view-animation.ng-enter {
+  position:absolute;
+  top:0;
+  width:100%; 
+}
+
+/* Have to set height explicity on ui-view 
+to prevent collapsing during animation*/
+.ui-view-container {
+  position: relative;
+  height: 65px;
+}
+
+[ui-view].ng-enter, [ui-view].ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  -webkit-transition:all .5s ease-in-out;
+    -moz-transition:all .5s ease-in-out;
+    -o-transition:all .5s ease-in-out;
+    transition:all .5s ease-in-out;
+}
+
+[ui-view].ng-enter {
+  opacity: 0;
+  -webkit-transform:scale3d(0.5, 0.5, 0.5);
+  -moz-transform:scale3d(0.5, 0.5, 0.5);
+  transform:scale3d(0.5, 0.5, 0.5);
+}
+
+[ui-view].ng-enter-active {
+  opacity: 1;
+  -webkit-transform:scale3d(1, 1, 1);
+  -moz-transform:scale3d(1, 1, 1);
+  transform:scale3d(1, 1, 1);
+}
+
+[ui-view].ng-leave {
+  opacity: 1; 
+  -webkit-transform:translate3d(0, 0, 0);
+  -moz-transform:translate3d(0, 0, 0);
+  transform:translate3d(0, 0, 0);
+}
+
+[ui-view].ng-leave-active {
+  opacity: 0;
+  -webkit-transform:translate3d(100px, 0, 0);
+  -moz-transform:translate3d(100px, 0, 0);
+  transform:translate3d(100px, 0, 0);
+}
+
+.slide.ng-leave {
+  position: relative;
+}
+.slide.ng-enter {
+  position: absolute;
+}
+.slide.ng-enter, .slide.ng-leave {
+  -webkit-transition: -webkit-transform 0.3s ease-in, opacity 0.3s ease-in;
+     -moz-transition: -moz-transform 0.3s ease-in, opacity 0.3s ease-in;
+       -o-transition: -o-transform 0.3s ease-in, opacity 0.3s ease-in;
+          transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+.slide.ng-enter, .slide.ng-leave.ng-leave-active {
+  -webkit-transform: scaleX(0.0001);
+       -o-transform: scaleX(0.0001);
+          transform: scaleX(0.0001);
+  opacity: 0;
+}
+.slide, .slide.ng-enter.ng-enter-active {
+  -webkit-transform: scaleX(1);
+       -o-transform: scaleX(1);
+          transform: scaleX(1);
+  opacity: 1;
+}
+
+/*
+ * the animation below will move enter in the view from the right side of the screen
+ * and move the current (expired) view from the center of the screen to the left edge
+ */
+@keyframes enter_animation {
+  from { left:100%; }
+  to { left:0; }
+}
+
+@-webkit-keyframes enter_animation {
+  from { left:100%; }
+  to { left:0; }
+}
+
+@keyframes leave_animation {
+  from { left:0; }
+  to { left:-100%; }
+}
+
+@-webkit-keyframes leave_animation {
+  from { left:0; }
+  to { left:-100%; }
+}
